@@ -37,11 +37,13 @@
 
 [11. User Data](#11-user-data)
 
-[12. SSH Configuration](#12-ssh-configuration)
+[12. plan and validation](#12-plan-and-validation)
 
-[13. ssh configuration and console access](#13-ssh-configuration-and-console-access)
+[13. SSH Configuration](#13-ssh-configuration)
 
-[14. New Version deployment and its challanges](14-New-version-deployment-and-its-challanges)
+[14.Configure jenkins](#14-Configure-jenkins)
+
+[15. New Version deployment and its challanges](#15-new-version-deployment-and-its-challanges)
 - - - - -
 - - -----
 
@@ -365,7 +367,7 @@ reboot
 * Click on build again
 ![build-success](https://https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
 
-## 14. New Version deployment and its challanges
+## 15. New Version deployment and its challanges
 
 
 

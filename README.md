@@ -332,7 +332,7 @@ reboot
 ### 13. ssh configuration and console access 
 
 ```
-ssh -i "~/.ssh/mtckey" ec2-user
+ssh -i "~/.ssh/mtckey" ec2-user@ip-addr
 ```
 =======
 Deploy AWS instance using Terraform and VS code and take remote ssh using vs code and access the files.
@@ -347,7 +347,7 @@ Deploy AWS instance using Terraform and VS code and take remote ssh using vs cod
 ![item](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/jenkins-jobtype.png)
 
 * Go to Build step for now and select execute shell 
-![executeshell](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/execute shellpng.png)
+![executeshell](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/execute%20shellpng.png)
 
 * Click on build and you should see build success
 ![build-fail](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-fail.png)

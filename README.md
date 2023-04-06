@@ -323,6 +323,7 @@ reboot
 
 
 [Terraform destroy](https://developer.hashicorp.com/terraform/cli/commands/destroy) will destroy the complete resources which was planned and applied.
+![destroy1](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/destroy1.png)
 
 ![destroy](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/destroy.png)
 
@@ -342,7 +343,18 @@ Deploy AWS instance using Terraform and VS code and take remote ssh using vs cod
 * Fetch the  inital password  from this command cat /var/lib/jenkins/secrets/initialAdminPassword
 * Login with password and create the admin credential
 * Install the plugins recommended on the window 
-* 
+* click on new item and select Free Style project
+![item](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/jenkins-jobtype.png)
+
+* Go to Build step for now and select execute shell 
+![executeshell](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/execute shellpng.png)
+
+* Click on build and you should see build success
+[build-fail](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-fail.png)
+
+[build-success](https://https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
+
+ 
 
 
 

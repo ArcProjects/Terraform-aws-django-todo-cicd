@@ -318,6 +318,8 @@ reboot
 
 ![imvalid arg](https://github.com/ArcProjects/terraformaws-deploy/blob/main/images/invalidarg.png)
 
+![deployed]https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/ec2deployed.png
+
 
 
 [Terraform destroy](https://developer.hashicorp.com/terraform/cli/commands/destroy) will destroy the complete resources which was planned and applied.

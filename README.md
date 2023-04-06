@@ -328,19 +328,18 @@ reboot
 
 ### 13. ssh configuration and console access 
 
+```
+ssh -i "~/.ssh/mtckey" ec2-user
+```
 =======
 Deploy AWS instance using Terraform and VS code and take remote ssh using vs code and access the files.
 
 
-=======
-Deploy AWS instance using Terraform and VS code and take remote ssh using vs code and access the files.
 
 
 
 
-
-
-A simple todo app built with django
+# A simple todo app built with django deploy on windows
 
 ![todo App](https://raw.githubusercontent.com/shreys7/django-todo/develop/staticfiles/todoApp.png)
 ### Setup

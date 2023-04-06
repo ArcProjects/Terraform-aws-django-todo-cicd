@@ -367,7 +367,7 @@ sudo usermod -a -G docker $USER
 reboot
 ```
 * Click on build again
-![build-success]((https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
+![build-success](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
 
 ## 15. New Version deployment and its challanges
 * Once the docker image is built and it is running the build will fail because the docker image will be running and will be using the port 8000

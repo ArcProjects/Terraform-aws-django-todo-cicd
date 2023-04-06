@@ -318,7 +318,7 @@ reboot
 
 ![imvalid arg](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/invalidarg.png)
 
-![deployed]https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/ec2deployed.png
+![deployed](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/ec2deployed.png)
 
 
 

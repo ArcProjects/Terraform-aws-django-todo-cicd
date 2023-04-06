@@ -38,6 +38,10 @@
 [11. User Data](#11-user-data)
 
 [12. SSH Configuration](#12-ssh-configuration)
+
+[13. ssh configuration and console access](#13-ssh-configuration-and-console-access)
+
+[14. New Version deployment and its challanges](14-New-version-deployment-and-its-challanges)
 - - - - -
 - - -----
 
@@ -358,7 +362,11 @@ The build was failed firstly due to permission issues with project repository fo
 ```sudo usermod -a -G docker $USER
 reboot
 ```
+* Click on build again
 ![build-success](https://https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
+
+## 14. New Version deployment and its challanges
+
 
 
 

@@ -102,14 +102,14 @@ You can configure the credentials directly by going in to .aws folder and edit S
 
 ### 5. VPC Creation
 ```
-#VPC Creation in main.tf file
-resource "aws_vpc" "ntc_vpc" {
-  cidr_block           = "10.123.0.0/16"
+#VPC Creation
+resource "aws_vpc" "jenkins_vpc" {
+  cidr_block           = "10.200.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
 
   tags = {
-    Name = "dev"
+    Name = "jenkins_VPC"
   }
 
 }
@@ -118,63 +118,82 @@ resource "aws_vpc" "ntc_vpc" {
 ### 6. Subnet Creation
 ```
 #Subnet Creation
-resource "aws_subnet" "ntc_public_subnet" {
-  vpc_id                  = aws_vpc.ntc_vpc.id
-  cidr_block              = "10.123.1.0/24"
+resource "aws_subnet" "jenkins_public_subnet" {
+  vpc_id                  = aws_vpc.jenkins_vpc.id
+  cidr_block              = "10.200.1.0/24"
   map_public_ip_on_launch = true
   availability_zone       = "us-east-1a"
 
   tags = {
-    Name = "dev-public"
+    Name = "jenkins-public"
   }
 }
+
 #Internet GW IGW Creation
-resource "aws_internet_gateway" "ntc_internet_gateway" {
-  vpc_id = aws_vpc.ntc_vpc.id
+resource "aws_internet_gateway" "jenkins_internet_gateway" {
+  vpc_id = aws_vpc.jenkins_vpc.id
 
   tags = {
-    Name = "ntc_igw"
+    Name = "jenkins_igw"
   }
 }
 
 #Route Table Creation
-resource "aws_route_table" "ntc_public_rt" {
-  vpc_id = aws_vpc.ntc_vpc.id
+resource "aws_route_table" "jenkins_public_rt" {
+  vpc_id = aws_vpc.jenkins_vpc.id
 
   tags = {
-    Name = "dev_public_rt"
+    Name = "jenkins_public_rt"
   }
 }
 
 #Route Inside a Route Table
 resource "aws_route" "default_route" {
-  route_table_id         = aws_route_table.ntc_public_rt.id
+  route_table_id         = aws_route_table.jenkins_public_rt.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.ntc_internet_gateway.id
+  gateway_id             = aws_internet_gateway.jenkins_internet_gateway.id
 }
 
 #Route Table Assosisation with Subnet
-resource "aws_route_table_association" "ntc_public_assoc" {
-  subnet_id      = aws_subnet.ntc_public_subnet.id
-  route_table_id = aws_route_table.ntc_public_rt.id
+resource "aws_route_table_association" "jenkins_public_assoc" {
+  subnet_id      = aws_subnet.jenkins_public_subnet.id
+  route_table_id = aws_route_table.jenkins_public_rt.id
 }
+
 ```
 
 ### 7. Security Group Creation
 
 ```
 #Security Group
-resource "aws_security_group" "ntc_sg" {
+resource "aws_security_group" "jenkins_sg" {
   name        = "public_sg"
   description = "public security group"
-  vpc_id      = aws_vpc.ntc_vpc.id
+  vpc_id      = aws_vpc.jenkins_vpc.id
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
+ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -187,14 +206,14 @@ resource "aws_security_group" "ntc_sg" {
 ### 8. Ami Datasource Configuration
 Create a new file called datasource.tf and create ami data which will be refernced while crearting new EC2
 ```
-data "aws_ami" "server_ami" {
+data "aws_ami" "amzlin_ami" {
   most_recent = true
-  owners      = ["099720109477"]
-
+  owners      = ["137112412989"]
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    values = ["al2023-ami-*"]
   }
+
 }
 ```
 
@@ -203,7 +222,7 @@ data "aws_ami" "server_ami" {
 ```
 #Key Pair Generation
 resource "aws_key_pair" "ntc_auth" {
-  key_name   = "ntckey"
+  key_name   = "jenkinskey"
   public_key = file("~/.ssh/ntckey.pub")
 }
 ```
@@ -211,24 +230,27 @@ resource "aws_key_pair" "ntc_auth" {
 ### 10. Ec2 Instance Creation
 
 ```
-# Instance Creation
-resource "aws_instance" "dev_node" {
-    instance_type = "t2.micro"
-    /*ami   = "var.ami"*/  # Deploy with variable
-    ami = data.aws_ami.server_ami.id
-    key_name = aws_key_pair.ntc_auth.id 
-    vpc_security_group_ids = [aws_security_group.ntc_sg.id]
-    subnet_id = aws_subnet.ntc_public_subnet.id
-    user_data = file("userdata.tpl")
+resource "aws_instance" "jenkins_node" {
+  instance_type = "t2.micro"
+  /*ami   = "var.ami"*/ # Deploy with variable
+  ami = data.aws_ami.amzlin_ami.id
+  key_name = aws_key_pair.jenkins_auth.id
+  # Assigns security group to EC2 instance allowing traffic on port 22 and 8080
+  vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
+  subnet_id              = aws_subnet.jenkins_public_subnet.id
+  # Assigns IAM role to EC2 instance
+  /*iam_instance_profile = aws_iam_instance_profile.jenkins-s3-instance-profile.id*/
+  #https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/amazon-linux-install.html
+  user_data = file("${var.os_type}-userdata.tpl")
 
-    root_block_device {
-        volume_size = 10
-    }
-    
-    tags = {
-        Name = "dev-node"
-    }
+  root_block_device {
+    volume_size = 10
+  }
 
+  tags = {
+    Name = "jenkins-node"
+  }
+}
 ```
 
 ### 11. User Data 
@@ -236,18 +258,55 @@ create userdata.tpl file . This file will be used to install softwares needed af
 
 ```
 #!/bin/bash
-sudo apt-get update -y &&
-sudo apt-get install -y \
-apt-transport-https \
-ca-certificates \
-curl \
-gnupg-agent \
-software-properties-common &&
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &&
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" &&
-sudo apt-get update -y &&
-sudo sudo apt-get install docker-ce docker-ce-cli containerd.io -y &&
-sudo usermod -aG docker ubuntu
+
+sudo yum update -y
+
+sudo yum install -y wget
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo   
+
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+sudo yum install -y java-11-amazon-corretto-headless
+
+sudo yum install -y java-11-amazon-corretto
+
+sudo yum install -y java-11-amazon-corretto-devel
+
+sudo yum upgrade -y
+
+sudo yum install jenkins -y
+
+sudo systemctl enable jenkins
+
+sudo systemctl start jenkins
+
+sudo systemctl status jenkins
+
+sudo yum install git -y
+sudo su 
+cd /home
+
+sudo mkdir projects
+
+cd projects 
+sudo mkdir django-todo
+cd django-todo 
+sudo chmod 777 projects/*
+
+sudo yum install git -y
+git init
+git clone https://github.com/ArcProjects/django-todo-cicd.git
+
+sudo yum search docker
+sudo yum info docker
+sudo yum install docker
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+sudo systemctl status docker.service
+sudo usermod -a -G docker ec2-user
+reboot
 ```
 
 ### 12. plan and validation 

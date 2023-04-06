@@ -1,7 +1,8 @@
 # django-todo using Terraform and Jenkins 
 #Deploy the AWS Infrastructure using Terraform
 
-![Architecture](https://user-images.githubusercontent.com/90862957/230392638-058477d6-ff53-4071-b29c-b459efd0f833.svg)
+![Architecture](https://user-images.githubusercontent.com/90862957/230394567-3e2b9120-dd5d-4986-9072-a27c3cd2792c.png)
+
 
  Terraform to create various resource such as Vpc, Subnet, Route table , Security group and EC2 instance.
 

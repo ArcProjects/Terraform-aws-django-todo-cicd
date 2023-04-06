@@ -1,7 +1,7 @@
 # django-todo using Terraform and Jenkins 
 #Deploy the AWS Infrastructure using Terraform
 
-![Architecture](https://user-images.githubusercontent.com/90862957/230394952-7bd8d799-a798-417d-9145-83d60254271e.png)
+![Architecture](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/djangotodo.png)
 
 
 

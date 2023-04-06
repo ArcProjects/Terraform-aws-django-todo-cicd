@@ -372,9 +372,11 @@ reboot
 * To resolve this issue we need to kill the docker image which is running and build a new one on it.
   * Below are the steps to kill a docker image
    To obtain the image id and to see images running.
+   
     ```docker ps
     ```` 
     To kill use
+    
     ```sudo docker kill <container-id>
     ````
 * After the process is killed click on build again it will become successful

@@ -1,0 +1,35 @@
+# build commands
+cd /home/projects/django-todo/django-todo
+docker build . -t todo-dev
+docker run -d -p 8000:8000 todo-dev
+
+#Search for docker package
+sudo yum search docker
+
+#Get version information
+sudo yum info docker
+
+#Install docker, run
+sudo yum install docker
+
+sudo systemctl enable docker.service
+sudo systemctl start docker.service
+sudo systemctl status docker.service
+
+sudo usermod -a -G docker ec2-user
+reboot
+create a dockerfile inside project directory
+
+#without permission the build process will fail the folder should have appopriate acess to w-x-r
+chmod 777 /home/project/
+# The build process will again fail if the acess to 
+sudo usermod -a -G docker $USER
+reboot
+
+list the container using 
+Docker ps
+to kill the container copy the container id and use
+sudo docker kill <container-id>
+
+
+

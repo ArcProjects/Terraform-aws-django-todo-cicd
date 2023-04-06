@@ -365,9 +365,21 @@ The build was failed firstly due to permission issues with project repository fo
 reboot
 ```
 * Click on build again
-![build-success](https://https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
+![build-success]((https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
 
 ## 15. New Version deployment and its challanges
+* Once the docker image is built and it is running the build will fail because the docker image will be running and will be using the port 8000
+* To resolve this issue we need to kill the docker image which is running and build a new one on it.
+  * Below are the steps to kill a docker image
+   To obtain the image id and to see images running.
+    ```docker ps
+    ```` 
+    To kill use
+    ```sudo docker kill <container-id>
+    ````
+* After the process is killed click on build again it will become successful
+
+
 
 
 

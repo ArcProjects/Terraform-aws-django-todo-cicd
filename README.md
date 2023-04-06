@@ -350,9 +350,17 @@ Deploy AWS instance using Terraform and VS code and take remote ssh using vs cod
 ![executeshell](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/execute shellpng.png)
 
 * Click on build and you should see build success
-[build-fail](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-fail.png)
+![build-fail](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-fail.png)
+The build was failed firstly due to permission issues with project repository folder and secondly due to permission issues to docker
 
-[build-success](https://https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
+```chmod 777 /home/project/
+```
+```sudo usermod -a -G docker $USER
+reboot
+```
+![build-success](https://https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
+
+
 
  
 

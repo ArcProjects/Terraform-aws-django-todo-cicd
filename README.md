@@ -334,6 +334,16 @@ ssh -i "~/.ssh/mtckey" ec2-user
 =======
 Deploy AWS instance using Terraform and VS code and take remote ssh using vs code and access the files.
 
+### 14. Configure Jenkins
+
+* Goto to http:<ip-addr>:8080 
+* Fetch the  inital password  from this command cat /var/lib/jenkins/secrets/initialAdminPassword
+* Login with password and create the admin credential
+* Install the plugins recommended on the window 
+* 
+
+
+
 
 
 

@@ -369,6 +369,10 @@ reboot
 * Click on build again
 ![build-success](https://github.com/ArcProjects/Terraform-aws-django-todo-cicd/blob/main/images/build-sucess.png)
 
+Go to http:<ip-addr>:8000/todo/  and see if the application webui is opening
+![success](https://user-images.githubusercontent.com/90862957/230472076-cb7c9d64-1252-40f6-afe1-6df8e2d2301d.png)
+
+
 ## 15. New Version deployment and its challanges
 * Once the docker image is built and it is running the build will fail because the docker image will be running and will be using the port 8000
 * To resolve this issue we need to kill the docker image which is running and build a new one on it.
